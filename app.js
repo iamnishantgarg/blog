@@ -15,7 +15,7 @@ require("./config/passport")(passport);
 cloudinary.config({
   cloud_name: keys.cloud_name,
   api_key: keys.api_key,
-  api_secret: keys.api_secret
+  api_secret: keys.api_secret,
 });
 
 // cloudinary storage setting
@@ -23,7 +23,7 @@ const storage = cloudinaryStorage({
   cloudinary: cloudinary,
   folder: "profile pic",
   allowedFormats: ["jpg", "png"],
-  transformation: [{ width: 500, height: 500, crop: "limit" }]
+  transformation: [{ width: 500, height: 500, crop: "limit" }],
 });
 const parser = multer({ storage: storage });
 
@@ -41,7 +41,7 @@ app.use(
   session({
     secret: "keysecret",
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
   })
 );
 
@@ -78,9 +78,9 @@ app.use((req, res, next) => {
 });
 
 mongoose
-  .connect(keys.mongoUri, { useNewUrlParser: true })
+  .connect(keys.mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("connected to db successfully..!");
     app.listen(PORT, () => console.log(`listening to port:${PORT}`));
   })
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
